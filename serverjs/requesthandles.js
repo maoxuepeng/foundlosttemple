@@ -31,6 +31,12 @@ function defaultHandle(request, response, pathname, params){
         var content = fs.readFileSync(process.cwd() + pathname, "utf-8");
         response.write(content);
         response.end();
+    }else if (stringEndWith(pathname, ".jpg")){
+        writeHTTPHead(response, 200, "image/jpg");
+        var content = fs.readFileSync(process.cwd() + pathname);
+        response.write(content);
+        response.end();
+
     }else{
         console.log("no found handle for " + pathname);
     }
