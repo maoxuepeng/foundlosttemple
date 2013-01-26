@@ -28,18 +28,23 @@ function defaultHandle(request, response, pathname, params){
 
     if (stringEndWith(pathname, ".css")){
         writeHTTPHead(response, 200, "text/css");
-        var content = fs.readFileSync(process.cwd() + pathname, "utf-8");
-        response.write(content);
-        response.end();
+        writeFile2Respond(pathname, response);
     }else if (stringEndWith(pathname, ".jpg")){
         writeHTTPHead(response, 200, "image/jpg");
-        var content = fs.readFileSync(process.cwd() + pathname);
-        response.write(content);
-        response.end();
-
+        writeFile2Respond(pathname, response);
+    }else if (stringEndWith(pathname, ".js")){
+        writeHTTPHead(response, 200, "text/javascript");
+        writeFile2Respond(pathname, response);
     }else{
         console.log("no found handle for " + pathname);
     }
+
+}
+
+function writeFile2Respond(pathname, response){
+    var content = fs.readFileSync(process.cwd() + pathname);
+    response.write(content);
+    response.end();
 
 }
 

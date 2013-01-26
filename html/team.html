@@ -1,62 +1,57 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link type="text/css" rel="stylesheet" href="../css/team.css"/>
-        <meta charset="UTF-8"/>
-        <title>Found Lost Temple</title>
-    </head>
-    <body>
-        <div class="banner">
-            <div class="bannerInner">
-                <div class="bannerLogo"></div>
-                <div class="bannerCreateTeam">
-                    <form method="get" action="#">
-                        <input class="createTeamButton" type="submit" value="Create Your Team Now" />
-                    </form>
-                    
-                </div>
-                <div class="bannerSearch">
-                    <form>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="toolbar">
-            <div class="toolbarInner">
-                <p>This is toolbar</p>
-                <div class="toolbarTeam"></div>
-                <div class="toolbarMessage"></div>
-                <div class="toolbarProfile"></div>
-                <div class="toolbarPostTalk"></div>
-            </div>
-        </div>
-        <div class="content">
-            <div class="contentInner">
-                <p>This is content</p>
-                <!--zero or more content unit-->
-                <div class="contentUnit">
-                <!--Origin message area-->
-                <div class="contentOrigin">
-                    <div class="sponsorPhoto"></div>
-                    <div class="contentOriginMessage"></div>
-                </div>
-                <!--Comment message area-->
-                <div class="contentComment">
-                    <!--zero or more comment unit-->
-                    <div class="commentUnit">
-                        <div class="commentPhoto"></div>
-                        <div class="commentMessage"></div>
-                    </div>
+  <head>
+    <title>团队</title>
+    <!--enable responsitive of bootstrap-->
+    <meta charset="utf-8">
 
-                </div><!--contentComment div end-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet"  href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet"  href="../bootstrap/css/bootstrap-responsive.css">
 
-                </div><!--contentUnit div end-->
-            </div><!--contentInner div end-->
-        </div><!--content div end-->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
 
-        <div class="foot">
-            <p>This is foot</p>
-            <div class="footInner"/>
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div id="id_toolbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          
+          <a class="brand" href="#">找到失去的殿堂</a>
+          <ul class="nav">
+            <li>
+                <a href="#">
+                  我的团队
+                </a>
+            </li>
+            <li><a href="#">我的消息</a></li>
+            <li><a href="#">我的设置</a></li>
+            <li><a href="#">发起话题</a></li>
+            <li><a href="#">创建团队</a></li>
+
+            <li>
+              <form class="navbar-search pull-right">
+                <input type="text" class="search-query" placeholder="Type to search"/>
+              </form>
+            </li>
+          </ul>
+
         </div>
-    </body>
- 
+    </div>
+    <div class="container-fluid">
+      <h1>test team</h1>
+    </div>
+
+  </body>
+
 </html>
