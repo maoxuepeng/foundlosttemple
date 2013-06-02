@@ -31,10 +31,32 @@ app.use(express.session(
 );
 ///app.use(express.cookieSession());
 
-
 //use body parser
 app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
 
+var utils = require('./utils');
+
+//home page
+app.get('/', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/index.html', response);
+} );
+
+//user management
+var userMgmt = require('./usermgmt/auth');
+app.post('/auth', userMgmt.signin);
+app.get('/signin', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/signin/signin.html', response);
+} );
+
+//dashboard
+app.get('/dashboard', function(request, response){
+    if ( userMgmt.isAuth() ){
+        utils.writeHTML2Client(__dirname + '/static/dashboard/dashboard.html', response);
+    }else{
+        
+    }
+    
+} );
 
 app.listen(80);
 

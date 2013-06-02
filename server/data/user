@@ -1,0 +1,14 @@
+{
+    "ibusybox@gmail.com" :    {
+            "username" : "ibusybox",
+            "email" : "ibusybox@gmail.com",
+            "password" : "5d2a4a00298e1ad38fbbfdadee5a051768730e4c",
+            "role" : "admin"
+        },
+    "ikindlebox@gmail.com" :   {
+            "username" : "ikindlebox",
+            "email" : "ikindlebox@gmail.com",
+            "password" : "5d2a4a00298e1ad38fbbfdadee5a051768730e4c",
+            "role" : "admin"
+        }
+}
