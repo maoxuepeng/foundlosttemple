@@ -50,12 +50,8 @@ app.get('/signin', function(request, response){
 
 //dashboard
 app.get('/dashboard', function(request, response){
-    if ( userMgmt.isAuth() ){
-        utils.writeHTML2Client(__dirname + '/static/dashboard/dashboard.html', response);
-    }else{
+    utils.writeHTML2Client(__dirname + '/static/dashboard/dashboard.html', response);
         
-    }
-    
 } );
 
 app.listen(80);

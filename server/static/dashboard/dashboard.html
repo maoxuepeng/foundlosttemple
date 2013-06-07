@@ -19,7 +19,6 @@
         position: fixed;
         top: 60px;
       }
-
     </style>
     
 
@@ -40,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">Utopia-Project </a>
+          <a class="brand" href="/">WeiFusion</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="#about">About</a></li>
@@ -73,28 +72,46 @@
 
       <!-- Example row of columns -->
 
+      <!--Profile row, only one row-->
       <div class="row-fluid">
-        <!--The user profile controller-->
+        <h3>我的帐号</h3><hr>
+        <!--Picture-->
         <div class="span3">
-          <!--message info-->
-          <div class="row-fluid"></div>
-          <!--socail account info-->
-          <div class="row-fluid"></div>
-          <!--user profile-->
-          <div class="row-fluid"></div>
+          <image src=""></image>
+          <button class="btn btn-link">修改密码</button>
+        </div>
+        <!--Message-->
+        <div class="span3">
+          <ul class="inline">
+            <li><a href="#"><h2>3</h2></a></li>
+            <li><small>未读消息</small></li>
+          </ul>
+        </div>
+        <!--Account-->
+        <div class="span3">
+            <ul class="inline">
+              <li><img src="/images/Sina_Weibo_Logo_RGB_C_E.png" width="80px" height="80px"></li>
+              <li>@weiboname</li>
+              <li>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-link btn-mini dropdown-toggle" data-toggle="dropdown"><i class="icon-align-justify"></i></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#"><i class="icon-pencil"></i>编辑</a></li>
+                    <li><a href="#"><i class="icon-trash"></i>删除</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
 
         </div>
+        <!--Write something-->
+        <div class="span3"></div>
 
-        <!--Team controller-->
-        <div class="span9">
-          <!--team you managed-->
-          <div class="row-fluid"></div>
+      </div>
 
-          <!--team you joined in-->
-          <div class="row-fluid"></div>
-
-        </div>
-
+      <!--Team row, maybe more than one row-->
+      <div class="row-fluid">
+        <h3>我的团队</h3><hr>
       </div>
 
     </div> <!-- /container -->
@@ -119,6 +136,7 @@
     <script src="/bootstrap/js/bootstrap-collapse.js"></script>
     <script src="/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script src="/bootstrap/js/holder/holder.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
 
     <script>
