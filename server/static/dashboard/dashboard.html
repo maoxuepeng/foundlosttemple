@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
     <title>Dashboard</title>
@@ -18,6 +18,9 @@
       .toolbar-fixed-top{
         position: fixed;
         top: 60px;
+      }
+      .background-color{
+        border-color: rgb(237,237,237);
       }
     </style>
     
@@ -81,17 +84,16 @@
           <button class="btn btn-link">修改密码</button>
         </div>
         <!--Message-->
-        <div class="span3">
-          <ul class="inline">
-            <li><a href="#"><h2>3</h2></a></li>
-            <li><small>未读消息</small></li>
-          </ul>
+        <div class="span2">
+          <a href="#"><h2>3</h2></a>
+          <p class="text-center"><small>未读消息</small></p>
         </div>
         <!--Account-->
-        <div class="span3">
-            <ul class="inline">
-              <li><img src="/images/Sina_Weibo_Logo_RGB_C_E.png" width="80px" height="80px"></li>
-              <li>@weiboname</li>
+        <div class="span3" ng-controller="AccountCtrl">
+            <a href="#accountDialog" data-toggle="modal"><i class="icon-plus"></i></a>
+            <ul class="inline" ng-repeat="account in accounts">
+              <li><img src="{{account.image.src}}" width="{{account.image.width}}" height="{{account.image.height}}"></li>
+              <li><a href="#">{{account.name}}</a></li>
               <li>
                 <div class="btn-group">
                   <a href="#" class="btn btn-link btn-mini dropdown-toggle" data-toggle="dropdown"><i class="icon-align-justify"></i></a>
@@ -102,10 +104,45 @@
                 </div>
               </li>
             </ul>
+            
 
-        </div>
+            <!--Add and modify account dialog-->
+            <div id="accountDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h5 id="myModalLabel">增加或删除帐号</h5>
+
+                <div class="modal-body">
+                  <form name="accountForm">
+                    <div class="control-group">
+                      <select>
+                        <option ng-repeat="accountMeta in accountMetaData" style="background-image:url({{accountMeta.image.src}});" value="{{accountMeta.type}}"><image src="{{accountMeta.image.src}}"></image>{{accountMeta.dispName}}</option>
+                      </select>
+                    </div>
+                    <div class="control-group" ng-class="{error: accountForm.email.$invalid}">
+                      <input type="email" name="email" ng-model="newAccount.email" placeholder="Email地址" required>
+                      <span ng-show="accountForm.email.$error.email" class="help-inline">
+                        非法的Email地址
+                      </span>
+                    </div>
+                    <div class="control-group" ng-class="{error: accountForm.password.$invalid}">
+                      <input type="password" name="password" ng-model="newAccount.password" placeholder="密码" required>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">丢弃</button>
+                  <button class="btn btn-primary">保存</button>
+                </div>
+              </div>
+            </div><!--end dialog-->
+        </div><!--end span3-->
+
         <!--Write something-->
-        <div class="span3"></div>
+        <div class="span3">
+          <button class="btn btn-primary btn-large">写点什么吧</button>
+        </div>
 
       </div>
 
@@ -138,6 +175,7 @@
     <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
     <script src="/bootstrap/js/holder/holder.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
+    <script src="/dashboard/account_ctrl.js"></script>
 
     <script>
     </script>
