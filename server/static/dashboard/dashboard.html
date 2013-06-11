@@ -88,6 +88,7 @@
           <a href="#"><h2>3</h2></a>
           <p class="text-center"><small>未读消息</small></p>
         </div>
+
         <!--Account-->
         <div class="span3" ng-controller="AccountCtrl">
             <a href="#accountDialog" data-toggle="modal"><i class="icon-plus"></i></a>
@@ -116,7 +117,7 @@
                   <form name="accountForm">
                     <div class="control-group">
                       <select>
-                        <option ng-repeat="accountMeta in accountMetaData" style="background-image:url({{accountMeta.image.src}});" value="{{accountMeta.type}}"><image src="{{accountMeta.image.src}}"></image>{{accountMeta.dispName}}</option>
+                        <option ng-repeat="accountMeta in accountMetaData" value="{{accountMeta.type}}">{{accountMeta.dispName}}</option>
                       </select>
                     </div>
                     <div class="control-group" ng-class="{error: accountForm.email.$invalid}">
@@ -140,8 +141,34 @@
         </div><!--end span3-->
 
         <!--Write something-->
-        <div class="span3">
-          <button class="btn btn-primary btn-large">写点什么吧</button>
+        <div class="span3" ng-controller="ContentCtrl">
+          <a href="#writeDialog" data-toggle="modal" class="btn btn-primary btn-large">写点什么吧</a>
+
+          <!--write dialog-->
+          <div id="writeDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h5>写点什么吧</h5>
+            </div>
+
+            <div class="modal-body">
+              <textarea rows="5" class="span12"></textarea>
+              <div>
+                <label class="checkbox inline">
+                  同步发送到:
+                </label>
+                <label class="checkbox inline " ng-repeat="meta in accountMetaData">
+                  <input type="checkbox" value="{{meta.type}}" ><img src="{{meta.image.src}}">
+                </label>
+
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">丢弃</button>
+              <button class="btn btn-primary">发布</button>
+            </div>
+          </div><!--end write dialog-->
         </div>
 
       </div>
@@ -176,6 +203,7 @@
     <script src="/bootstrap/js/holder/holder.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
     <script src="/dashboard/account_ctrl.js"></script>
+    <script src="/dashboard/content_ctrl.js"></script>
 
     <script>
     </script>
