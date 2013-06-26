@@ -5,10 +5,6 @@ function AccountCtrl($scope){
         {name: '@tecentweibo', image: {src: '/images/Tecent_Weibo_Logo80.gif', width: '80px', heigth: '80px'}, type: 'Tecent Weibo'}
     ];
     $scope.newAccount = {email: '', password: ''};
-    $scope.accountMetaData = [
-        {type: 'Sina Weibo', image: {src: '/images/Sina_Weibo_Logo_RGB_C_E80.png'}, dispName: '新浪微博'},
-        {type: 'Tecent Weibo', image: {src: '/images/Tecent_Weibo_Logo80.gif'}, dispName: '腾讯微博'}
-    ];
 
     $scope.user = {name: '', eamil: ''};
 }

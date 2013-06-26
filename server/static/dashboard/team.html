@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>Team</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .toolbar-fixed-top{
+        position: fixed;
+        top: 60px;
+      }
+      .background-color{
+        border-color: rgb(237,237,237);
+      }
+
+    </style>
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div id="banner" class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"><image src="/icons/logo.png"/></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">WeiFusion</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action <b class="caret"></b></a>
+                  <ul id="actionMenu" class="dropdown-menu">
+                    <!--insert dynamic by jQuery later-->
+                    <!--li><button class="btn btn-link">New Product</button></li-->
+                  </ul>
+              </li>
+            </ul>
+            <form class="navbar-search pull-right">
+              <input class="search-query span3" type="text" placeholder="Type to search">
+            </form>
+          </div><!--/.nav-collapse -->
+        <!--/div-->
+      </div>
+    </div>
+  </div>
+
+    <div class="container-fluid" id="contentContainer" ng-controller="ContentCtrl">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <!--div class="hero-unit">
+        <h1>Hello, world!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+      </div-->
+
+      <!-- Example row of columns -->
+
+      <div class="span12" ng-repeat="con in contents">
+        <div>
+          
+          <article>
+            <p class="lead">{{con.content}}</p>
+            <small>
+              <ul class="inline">
+                <li>{{con.creationDateTime}}</li>
+                <li>来自 {{getSourceNameByType(con.source)}}</li>
+                <li><a href="/content/?id={{con.id}}">查看详细</a></li>
+              </ul>
+            </small>
+          </article>
+        
+        </div>
+        <hr>
+      </div>
+
+    </div> <!-- /container -->
+
+    <div id="footer">
+      <p class="muted credit">&copy; Utopia-Project All Rights Reserved.</p>
+    </div>
+
+     <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/bootstrap/js/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap-transition.js"></script>
+    <script src="/bootstrap/js/bootstrap-alert.js"></script>
+    <script src="/bootstrap/js/bootstrap-modal.js"></script>
+    <script src="/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="/bootstrap/js/bootstrap-scrollspy.js"></script>
+    <script src="/bootstrap/js/bootstrap-tab.js"></script>
+    <script src="/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="/bootstrap/js/bootstrap-popover.js"></script>
+    <script src="/bootstrap/js/bootstrap-button.js"></script>
+    <script src="/bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="/bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script src="/bootstrap/js/holder/holder.js"></script>
+    <script src="/angularjs_1.0.7/angular.js"></script>
+    <script src="/dashboard/utils.js"></script>
+    <script src="/dashboard/team_ctrl.js"></script>
+    <script src="/dashboard/content_ctrl.js"></script>
+    <script>
+    </script>
+  </body>
+</html>

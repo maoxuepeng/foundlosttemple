@@ -54,6 +54,15 @@ app.get('/dashboard', function(request, response){
         
 } );
 
+app.get('/team', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/dashboard/team.html', response);
+});
+
+app.get('/content', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/dashboard/content.html', response);
+});
+
+
 app.listen(80);
 
 console.log("app listening on port 80.");

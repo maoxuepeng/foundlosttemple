@@ -33,7 +33,6 @@
   </head>
 
   <body>
-
     <div id="banner" class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
@@ -117,7 +116,7 @@
                   <form name="accountForm">
                     <div class="control-group">
                       <select>
-                        <option ng-repeat="accountMeta in accountMetaData" value="{{accountMeta.type}}">{{accountMeta.dispName}}</option>
+                        <option ng-repeat="accountMeta in sourceMetaData" value="{{accountMeta.type}}">{{accountMeta.dispName}}</option>
                       </select>
                     </div>
                     <div class="control-group" ng-class="{error: accountForm.email.$invalid}">
@@ -157,7 +156,7 @@
                 <label class="checkbox inline">
                   同步发送到:
                 </label>
-                <label class="checkbox inline " ng-repeat="meta in accountMetaData">
+                <label class="checkbox inline " ng-repeat="meta in sourceMetaData">
                   <input type="checkbox" value="{{meta.type}}" ><img src="{{meta.image.src}}">
                 </label>
 
@@ -174,16 +173,27 @@
       </div>
 
       <!--Team row, maybe more than one row-->
-      <div class="row-fluid">
+      <div class="row-fluid" ng-controller="TeamCtrl">
         <h3>我的团队</h3><hr>
+        <div class="span3" ng-repeat="team in teams">
+          <a href="/team/?id={{team.id}}"><h4>{{team.name}}</h4></a>
+          <ul class="inline">
+            <li ><small>创建者: <a href="#">{{team.creator}}</a></small></li>
+            <li ><small>成员数: <a href="#">{{team.memberAmount}}</a></small></li>
+          </ul>
+
+          <ul class="inline">
+            <li><small><a href="#"><i class="icon-pencil"></i>编辑</a></small></li>
+            <li><small><a href="#"><i class="icon-trash"></i>解散</a></small></li>
+          </ul>
+        </div>
       </div>
 
     </div> <!-- /container -->
-    
-    <footer>
-      <p>&copy; Utopia-Project All Rights Reserved.</p>
-    </footer>
 
+    <div id="footer">
+      <p class="muted credit">&copy; Utopia-Project All Rights Reserved.</p>
+    </div>
      <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -204,7 +214,7 @@
     <script src="/angularjs_1.0.7/angular.js"></script>
     <script src="/dashboard/account_ctrl.js"></script>
     <script src="/dashboard/content_ctrl.js"></script>
-
+    <script src="/dashboard/team_ctrl.js"></script>
     <script>
     </script>
   </body>
