@@ -23,7 +23,7 @@ var allArticalMetaData = {metaList: []};
 function getAllArticalMetaData(request, response){
     //check permission
     authMgmg.isSingin(request, function( err, isSingin ){
-        if ( err || ! isSignin ){
+        if ( err || ! isSingin ){
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
         }
@@ -67,7 +67,7 @@ function getAllArticalMetaData(request, response){
 function getArticalAsHTML(request, response){
     //check permission
     authMgmg.isSingin(request, function( err, isSingin ){
-        if ( err || ! isSignin ){
+        if ( err || ! isSingin ){
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
         }
