@@ -103,40 +103,8 @@
                   </ul>
                 </div>
               </li>
-            </ul>
+            </ul><!--end ul inline-->
             
-
-            <!--Add and modify account dialog-->
-            <div id="accountDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h5 id="myModalLabel">增加或删除帐号</h5>
-
-                <div class="modal-body">
-                  <form name="accountForm">
-                    <div class="control-group">
-                      <select>
-                        <option ng-repeat="accountMeta in sourceMetaData" value="{{accountMeta.type}}">{{accountMeta.dispName}}</option>
-                      </select>
-                    </div>
-                    <div class="control-group" ng-class="{error: accountForm.email.$invalid}">
-                      <input type="email" name="email" ng-model="newAccount.email" placeholder="Email地址" required>
-                      <span ng-show="accountForm.email.$error.email" class="help-inline">
-                        非法的Email地址
-                      </span>
-                    </div>
-                    <div class="control-group" ng-class="{error: accountForm.password.$invalid}">
-                      <input type="password" name="password" ng-model="newAccount.password" placeholder="密码" required>
-                    </div>
-                  </form>
-                </div>
-
-                <div class="modal-footer">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">丢弃</button>
-                  <button class="btn btn-primary">保存</button>
-                </div>
-              </div>
-            </div><!--end dialog-->
         </div><!--end span3-->
 
         <!--Write something-->

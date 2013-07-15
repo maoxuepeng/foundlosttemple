@@ -2,6 +2,10 @@ var KEY_1 = "socialrss";
 var KEY_2 = "password";
 
 var crypto = require('crypto');
+var algorithm = 'aes256';
+var cipher = crypto.createCipher(algorithm, KEY_1); 
+var decipher = crypto.createDecipher(algorithm, KEY_1);
+
 var fs = require('fs');
 var walk = require('walk');
 var url = require('url');
@@ -143,6 +147,24 @@ function getRandomString(){
     return Math.random() * 1000 + 1;
 }
 
+function encryptAES(src){
+    return cipher.update(src, 'utf8', 'base64') + cipher.final('base64');
+}
+
+function decryptAES(src){
+    return decipher.update(src, 'base64', 'utf8') + decipher.final('utf8');
+}
+
+function encryptAESFromFile(file, callback){
+    fs.readFile(file, 'utf8', function(err, data){
+        if ( err ){
+            callback( err, null );
+        }else{
+            callback( null, encryptAES(data) );
+        }
+    });
+}
+
 exports.stringEndWith = stringEndWith;
 exports.trim = trim;
 exports.encryptSync = encryptSync;
@@ -154,4 +176,6 @@ exports.arrayContainsPrototype = arrayContainsPrototype;
 exports.getRequestParam = getRequestParam;
 exports.getRandomString = getRandomString;
 exports.writeHTML2Client = writeHTML2Client;
-
+exports.encryptAES = encryptAES;
+exports.decryptAES = decryptAES;
+exports.encryptAESFromFile = encryptAESFromFile;
