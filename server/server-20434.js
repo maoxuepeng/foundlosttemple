@@ -12,6 +12,7 @@ var app = express();
 
 //product and /home/products are static html, script, jpg files
 app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/data/articals/public'));
 
 //use a sceret key
 app.use(express.cookieParser('found lost temple'));
