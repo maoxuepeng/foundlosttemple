@@ -61,7 +61,16 @@ app.get('/signin', function(request, response){
     utils.writeHTML2Client(__dirname + '/static/20434/signin.html', response);
 } );
 app.get('/artical', function(request, response){
-    utils.writeHTML2Client(__dirname + '/static/20434/artical_content.html', response);
+    authMgmt.isSingin(request, function( err, isSignin ){
+        if ( err || ! isSignin ){
+            response.writeHead(302, {'Location' : '/signin'});
+            response.end();
+        }else{
+            console.log('go to artical page');
+            utils.writeHTML2Client(__dirname + '/static/20434/artical_content.html', response);
+        }
+    });
+
 });
 app.get('/artical/meta', articalMgmt.getAllArticalMetaData);
 app.get('/artical/content', articalMgmt.getArticalAsHTML);

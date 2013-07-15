@@ -22,17 +22,12 @@ var allArticalMetaData = {metaList: []};
 */
 function getAllArticalMetaData(request, response){
     //check permission
-    var pass = true;
     authMgmg.isSingin(request, function( err, isSingin ){
         if ( err || ! isSingin ){
-            pass = false;
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
         }
     });
-    if ( ! pass ){
-        return;
-    }
 
     //empty the cache
     allArticalMetaData.metaList = [];
@@ -71,17 +66,13 @@ function getAllArticalMetaData(request, response){
 */
 function getArticalAsHTML(request, response){
     //check permission
-    var pass = true;
     authMgmg.isSingin(request, function( err, isSingin ){
         if ( err || ! isSingin ){
-            pass = false;
+            console.log('not signin, redirect to /signin');
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
         }
     });
-    if ( ! pass ){
-        return;
-    }
 
     request.setEncoding('utf8');
 
