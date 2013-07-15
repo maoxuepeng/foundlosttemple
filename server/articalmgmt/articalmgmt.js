@@ -6,6 +6,8 @@ var url = require('url');
 var pagedown = require("pagedown");
 var converter = new pagedown.Converter();
 
+var authMgmg = require('../usermgmt/auth_question');
+
 /**
 * Global variable store the all articals meta data.
 */
@@ -19,6 +21,14 @@ var allArticalMetaData = {metaList: []};
 * input param format: none
 */
 function getAllArticalMetaData(request, response){
+    //check permission
+    authMgmg.isSingin(request, function( err, isSingin ){
+        if ( err || ! isSignin ){
+            response.writeHead(302, {'Location' : '/signin'});
+            response.end();
+        }
+    });
+
     //empty the cache
     allArticalMetaData.metaList = [];
 
@@ -55,6 +65,15 @@ function getAllArticalMetaData(request, response){
 * input param format: title=xxxxx
 */
 function getArticalAsHTML(request, response){
+    //check permission
+    authMgmg.isSingin(request, function( err, isSingin ){
+        if ( err || ! isSignin ){
+            response.writeHead(302, {'Location' : '/signin'});
+            response.end();
+        }
+    });
+
+    
     request.setEncoding('utf8');
 
     var clientData = url.parse(request.url).query;
