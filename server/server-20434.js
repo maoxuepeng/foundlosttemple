@@ -43,17 +43,11 @@ var articalMgmt = require('./articalmgmt/articalmgmt');
 
 //home page
 app.get('/', function(request, response){
-    console.log('request the root path');
 
-    authMgmt.isSingin(request, function( err, isSignin ){
-        if ( err || ! isSignin ){
-            response.writeHead(302, {'Location' : '/signin'});
-            response.end();
-        }else{
-            console.log('go to home page');
-            utils.writeHTML2Client(__dirname + '/static/20434/index.html', response);
-        }
+    authMgmt.checkSingin(request, response, function(){
+        utils.writeHTML2Client(__dirname + '/static/20434/index.html', response);
     });
+
 } );
 
 app.post('/auth', authMgmt.signin);
@@ -61,19 +55,19 @@ app.get('/signin', function(request, response){
     utils.writeHTML2Client(__dirname + '/static/20434/signin.html', response);
 } );
 app.get('/artical', function(request, response){
-    authMgmt.isSingin(request, function( err, isSignin ){
-        if ( err || ! isSignin ){
-            response.writeHead(302, {'Location' : '/signin'});
-            response.end();
-        }else{
-            console.log('go to artical page');
-            utils.writeHTML2Client(__dirname + '/static/20434/artical_content.html', response);
-        }
+    authMgmt.checkSingin(request, response, function(){
+        utils.writeHTML2Client(__dirname + '/static/20434/artical_content.html', response);
     });
-
 });
+
 app.get('/artical/meta', articalMgmt.getAllArticalMetaData);
 app.get('/artical/content', articalMgmt.getArticalAsHTML);
+
+app.get('/artical/new', function(request, response){
+    authMgmt.checkSingin(request, response, function(){
+        utils.writeHTML2Client(__dirname + '/static/20434/artical_new.html', response);
+    });    
+});
 
 
 app.listen(80);

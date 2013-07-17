@@ -22,6 +22,19 @@ function isSingin(request, callback){
     });
 }
 
+
+function checkSingin(request, response, afterSingin){
+    isSingin(request, function( err, isSignin ){
+        if ( err || ! isSignin ){
+            response.writeHead(302, {'Location' : '/signin'});
+            response.end();
+        }else{
+            afterSingin();
+        }
+    });
+
+}
+
 function isNameIncluded(name, callback){
     var isNameIncluded = false;
     fs.readFile(process.cwd() + '/server/data/names', 'utf8', function( err, data){
@@ -88,3 +101,4 @@ function signin(request, response){
 
 exports.signin = signin;
 exports.isSingin = isSingin;
+exports.checkSingin = checkSingin;
