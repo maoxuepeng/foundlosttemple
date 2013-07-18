@@ -12,6 +12,7 @@ var authMgmg = require('../usermgmt/auth_question');
 * Global variable store the all articals meta data.
 */
 var allArticalMetaData = {metaList: []};
+var ARTICAL_PATH = process.cwd() + '/server/data/articals';
 
 
 /**
@@ -33,9 +34,22 @@ function getAllArticalMetaData(request, response){
     allArticalMetaData.metaList = [];
 
     utils.walkDirectory( 
-        process.cwd() + '/server/data/articals', 
+        ARTICAL_PATH, 
         {followLinks : false}, 
         function( root, fileStats ){
+            walkArticalDirectory(root, fileStats);
+            return true;
+        },
+        function(){
+            //write response back
+            response.writeHead(200, {'Content-Type' : 'text/json'});
+            response.write(JSON.stringify(allArticalMetaData));
+            response.end();
+        }
+    );
+}
+
+function walkArticalDirectory(root, fileStats ){
             if ( utils.stringEndWith(fileStats.name, ".md") ){
                 //tmp variable
                 var meta = {};
@@ -48,15 +62,7 @@ function getAllArticalMetaData(request, response){
                 allArticalMetaData.metaList.push(meta);
 
             }
-            return true;
-        },
-        function(){
-            //write response back
-            response.writeHead(200, {'Content-Type' : 'text/json'});
-            response.write(JSON.stringify(allArticalMetaData));
-            response.end();
-        }
-    );
+
 }
 
 /**
@@ -80,20 +86,65 @@ function getArticalAsHTML(request, response){
     var clientParam = queryString.parse(clientData);
     console.log(clientParam);
     var path = getAbsolutePathByTitleSync(clientParam.title);
+    console.log('read file from path: ' + path);
 
-    var ret = {articalHTML: ''};
+    var ret = {articalHTML: '', articalMD: ''};
     fs.readFile(path, 'utf8', function( err, data ){
         if ( err ){
             console.log(err);
             ret.articalHTML = '<h3>Sorry there are some error in the server...</h3>';
         }else{
             ret.articalHTML = converter.makeHtml(data);
+            ret.articalMD = data;
         }
         //send back to client
         response.writeHead(200, {'Content-Type' : 'text/json'});
         response.write(JSON.stringify(ret));
         response.end();
     });
+}
+
+function newArtical(request, response){
+    //check permission
+    authMgmg.isSingin(request, function( err, isSingin ){
+        if ( err || ! isSingin ){
+            console.log('not signin, redirect to /signin');
+            response.writeHead(302, {'Location' : '/signin'});
+            response.end();
+        }
+    });
+    
+
+    var clientData = '';
+    request.setEncoding("utf8");
+
+    request.on("data", function(data){
+        clientData += data;
+    });
+
+    request.on("end", function(){
+        var backData = {status: -1, error: ''};
+        console.log(clientData);
+        var articalOjb = JSON.parse(clientData);
+        var filename = ARTICAL_PATH + '/' + articalOjb.title + '.md';
+        var artical = articalOjb.artical;
+
+        fs.writeFile(filename, artical, {encoding: 'utf8'}, function(err){
+            if ( err ){
+                backData.status = 1;
+                backData.error = err;
+            }else{
+                backData.status = 0;
+                backData.error = '';
+            }
+
+            //write back
+            response.writeHead(200, {'Content-Type' : 'text/json'});
+            response.write(JSON.stringify(backData));
+            response.end();
+        });
+    });
+
 }
 
 function getAbsolutePathByTitleSync(title){
@@ -113,3 +164,4 @@ function getAbsolutePathByTitleSync(title){
 
 exports.getAllArticalMetaData = getAllArticalMetaData;
 exports.getArticalAsHTML = getArticalAsHTML;
+exports.newArtical = newArtical;

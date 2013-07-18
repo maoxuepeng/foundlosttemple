@@ -64,7 +64,7 @@
     </div>
   </div>
 
-    <div class="container-fluid" id="contentContainer" ng-controller="ArticalNewCtrl">
+    <div class="container-fluid" id="contentContainer" ng-controller="ArticalNewCtrl" ng-init="getArticalContent()">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <!--div class="hero-unit">
@@ -74,20 +74,32 @@
       </div-->
 
       <!-- Example row of columns -->
+
+    <div class="alert alert-block">
+      <p>
+        写文章的格式是<a hef="http://baike.baidu.com/view/2311114.htm">Markdown</a>，关于Markdown的详细说明请猛击<a href="http://wowubuntu.com/markdown/">Markdown 语法说明 (简体中文版)</a> So Easy!。
+      </p>
+      <div class="btn-group">
+        <a href="/" class="btn btn-danger">放弃修改</a>
+        <button ng-click="updateArtical()" class="btn btn-primary">发布</button>
+      </div>
+      
+    </div>
+
       <div class="row-fluid"><!---outter row-fluid-->
 
       <div class="span6">
         <div class="row-fluid">
-          <input id="artical_title" class="span12" type="text" placeholder="请输入文章标题" ng-model="articalTitle">
+          <input id="artical_title" class="span12" type="text" placeholder="请输入文章标题（不超过50字）" ng-model="artical.title">
         </div>
         <div class="row-fluid">
-          <textarea id="artical_markdown" class="span12" rows="25" placeholder="请输入文章内容" ng-model="articalMD">
+          <textarea id="artical_markdown" class="span12" rows="25" placeholder="请输入文章内容（不少于50字）" ng-model="artical.articalMD">
           </textarea>
         </div>
       </div>
 
       <div class="span6">
-        <div id="artical_html" class="span12" rows="27">
+        <div id="artical_html" class="span12" rows="27" ng-model="artical.articalHTML">
         </div>
       </div>
 
@@ -126,7 +138,7 @@
         var converter = new Markdown.Converter();
         var mdVal = $('#artical_markdown').val();
         var htmlVal = converter.makeHtml(mdVal);
-        $('#artical_html').empyt();
+        $('#artical_html').empty();
         $('#artical_html').append(htmlVal);   
       }
 

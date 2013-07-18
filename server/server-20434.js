@@ -69,6 +69,8 @@ app.get('/artical/new', function(request, response){
     });    
 });
 
+app.post('/artical/new/json', articalMgmt.newArtical);
+
 
 app.listen(80);
 
