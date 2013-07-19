@@ -12,7 +12,7 @@ var authMgmg = require('../usermgmt/auth_question');
 * Global variable store the all articals meta data.
 */
 var allArticalMetaData = {metaList: []};
-var ARTICAL_PATH = process.cwd() + '/server/data/articals';
+var ARTICAL_PATH = process.cwd() + '/server/data/articals/20434';
 
 
 /**

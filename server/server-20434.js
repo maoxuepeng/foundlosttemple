@@ -8,11 +8,6 @@ var MemoryStore = express.session.MemoryStore;
 var sessionStore = new MemoryStore();
 var app = express();
 
-//app.use(express.favicon());
-
-//product and /home/products are static html, script, jpg files
-app.use(express.static(__dirname + '/static'));
-app.use(express.static(__dirname + '/data/articals/public'));
 
 //use a sceret key
 app.use(express.cookieParser('found lost temple'));
@@ -35,11 +30,31 @@ app.use(express.session(
 //use body parser
 app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
 
-var utils = require('./utils');
 
+var utils = require('./utils');
 //auth management
 var authMgmt = require('./usermgmt/auth_question');
 var articalMgmt = require('./articalmgmt/articalmgmt');
+
+//protect static files
+var protectPath = function(regex){
+    return function(request, response, next){
+        if (!regex.test(request.url)) { return next(); }
+
+        authMgmt.checkSingin(request, response, function(){
+            next();
+        });
+    }
+};
+
+//app.use(express.favicon());
+
+//product and /home/products are static html, script, jpg files
+app.use(express.static(__dirname + '/static'));
+app.use(protectPath(/^\/protected\/.*$/));
+app.use(express.static(__dirname + '/data/public'));
+
+
 
 //home page
 app.get('/', function(request, response){
