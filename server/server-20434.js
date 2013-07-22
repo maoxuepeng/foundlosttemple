@@ -27,15 +27,6 @@ app.use(express.session(
 );
 ///app.use(express.cookieSession());
 
-//use body parser
-app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
-
-
-var utils = require('./utils');
-//auth management
-var authMgmt = require('./usermgmt/auth_question');
-var articalMgmt = require('./articalmgmt/articalmgmt');
-
 //protect static files
 var protectPath = function(regex){
     return function(request, response, next){
@@ -44,7 +35,7 @@ var protectPath = function(regex){
         authMgmt.checkSingin(request, response, function(){
             next();
         });
-    }
+    };
 };
 
 //app.use(express.favicon());
@@ -55,6 +46,40 @@ app.use(protectPath(/^\/protected\/.*$/));
 app.use(express.static(__dirname + '/data/public'));
 
 
+//image upload
+//set up file upload https://github.com/aguidrevitch/jquery-file-upload-middleware
+var upload = require('jquery-file-upload-middleware');
+upload.configure({
+        imageVersions: {
+            thumbnail: {
+                width: 80,
+                height: 80
+            }
+        }
+    });
+
+app.use('/upload', function (request, response, next){
+    upload.fileHandler(
+        {
+            uploadDir: function(){
+                return process.cwd() + '/server/data/public/protected/20434';
+            },
+            uploadUrl: function(){
+                return '/protected/20434';
+            }
+        }
+        )(request, response, next);
+});
+
+
+//use body parser. express.bodyParser should be after than the upload, because of the conflition
+app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
+
+
+var utils = require('./utils');
+//auth management
+var authMgmt = require('./usermgmt/auth_question');
+var articalMgmt = require('./articalmgmt/articalmgmt');
 
 //home page
 app.get('/', function(request, response){
@@ -85,6 +110,12 @@ app.get('/artical/new', function(request, response){
 });
 
 app.post('/artical/new/json', articalMgmt.newArtical);
+
+app.get('/photo', function(request, response){
+    authMgmt.checkSingin(request, response, function(){
+        utils.writeHTML2Client(__dirname + '/static/20434/upload.html', response);
+    });
+});
 
 
 app.listen(80);
