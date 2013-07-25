@@ -12,6 +12,8 @@
         <noscript><link rel="stylesheet" href="/jQuery-File-Upload-master/css/jquery.fileupload-ui-noscript.css">
         </noscript>
 
+        <link href="/colorbox-master/example1/colorbox.css" rel="stylesheet">
+
         <style type="text/css">
             body {
                 padding-top: 60px;
@@ -91,7 +93,7 @@
             </div>
         </div>
         <!-- The table listing the files available for upload/download -->
-        <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+        <table role="presentation" id="albums-tbl" class="table table-striped"><tbody class="files" data-toggle="modal-gallery"></tbody></table>
     </form> 
     </div> <!--end span12-->
 </body>
@@ -138,7 +140,7 @@
         <td>
             <span class="preview">
                 {% if (file.thumbnail_url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                    <a class="group1" href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}
             </span>
         </td>
@@ -206,5 +208,17 @@
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->
 <!--[if gte IE 8]><script src="js/cors/jquery.xdr-transport.js"></script><![endif]-->
 
-
+<script src="/colorbox-master/jquery.colorbox.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#albums-tbl').bind('DOMSubtreeModified', function(){
+            $(".group1").colorbox({
+                rel:'group1',
+                //width: '100%',
+                height: '100%'
+            });
+        });
+        
+    });
+</script>
 </html>
