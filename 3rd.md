@@ -12,6 +12,9 @@ a UI framework. [http://twitter.github.io/bootstrap/index.html](http://twitter.g
 ####AngularJS
 a MVC framework. [http://angularjs.org](http://angularjs.org)
 
+####imagemagic
+a image manpulate tool [http://www.imagemagick.org/](http://www.imagemagick.org/)
+
 
 
 
