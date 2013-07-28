@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" id="ng-app" ng-app="signinApp">
   <head>
     <meta charset="utf-8">
     <title>Sing in</title>
@@ -58,9 +58,9 @@
       <h4>消息!</h4>
       很多同学用的是IE6浏览器，IE6上网太慢了，建议下载<a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>，然后再访问。
     </div>
-    <div class="container" ng-controller="SigninCtrl">
+    <div class="container" ng-controller="SigninCtrl" ng-init="autoSignin()">
 
-      <form id="signin_form" class="form-signin" ng-submit="signin()" >
+      <form id="signin_form" class="form-signin" ng-submit="signinAction()" >
         <h2 class="form-signin-heading">稍等，我们需要你回答几个问题</h2>
         <p class="text-error">{{signinError}}</p>
         <input type="text" class="input-block-level" placeholder="我们班主任名字？" ng-model="auth.teacherName">
@@ -88,7 +88,9 @@
     <script src="/bootstrap/js/bootstrap-collapse.js"></script>
     <script src="/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script src="/js-base64-master/base64.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
+    <script src="/bower-angular-cookies-master/angular-cookies.js"></script>
     <script src="/20434/signin.js"></script>
 
     <script>
