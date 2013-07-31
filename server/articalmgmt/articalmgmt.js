@@ -27,26 +27,27 @@ function getAllArticalMetaData(request, response){
         if ( err || ! isSingin ){
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
-        }
+        }else{
+            //empty the cache
+            allArticalMetaData.metaList = [];
+
+            utils.walkDirectory( 
+                ARTICAL_PATH, 
+                {followLinks : false}, 
+                function( root, fileStats ){
+                    walkArticalDirectory(root, fileStats);
+                    return true;
+                },
+                function(){
+                    //write response back
+                    response.writeHead(200, {'Content-Type' : 'text/json'});
+                    response.write(JSON.stringify(allArticalMetaData));
+                    response.end();
+                }
+            );            
+        }//end else
     });
 
-    //empty the cache
-    allArticalMetaData.metaList = [];
-
-    utils.walkDirectory( 
-        ARTICAL_PATH, 
-        {followLinks : false}, 
-        function( root, fileStats ){
-            walkArticalDirectory(root, fileStats);
-            return true;
-        },
-        function(){
-            //write response back
-            response.writeHead(200, {'Content-Type' : 'text/json'});
-            response.write(JSON.stringify(allArticalMetaData));
-            response.end();
-        }
-    );
 }
 
 function walkArticalDirectory(root, fileStats ){
@@ -77,31 +78,33 @@ function getArticalAsHTML(request, response){
             console.log('not signin, redirect to /signin');
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
-        }
-    });
-
-    request.setEncoding('utf8');
-
-    var clientData = url.parse(request.url).query;
-    var clientParam = queryString.parse(clientData);
-    console.log(clientParam);
-    var path = getAbsolutePathByTitleSync(clientParam.title);
-    console.log('read file from path: ' + path);
-
-    var ret = {articalHTML: '', articalMD: ''};
-    fs.readFile(path, 'utf8', function( err, data ){
-        if ( err ){
-            console.log(err);
-            ret.articalHTML = '<h3>Sorry there are some error in the server...</h3>';
         }else{
-            ret.articalHTML = converter.makeHtml(data);
-            ret.articalMD = data;
-        }
-        //send back to client
-        response.writeHead(200, {'Content-Type' : 'text/json'});
-        response.write(JSON.stringify(ret));
-        response.end();
+            request.setEncoding('utf8');
+
+            var clientData = url.parse(request.url).query;
+            var clientParam = queryString.parse(clientData);
+            console.log(clientParam);
+            var path = getAbsolutePathByTitleSync(clientParam.title);
+            console.log('read file from path: ' + path);
+
+            var ret = {articalHTML: '', articalMD: ''};
+            fs.readFile(path, 'utf8', function( err, data ){
+                if ( err ){
+                    console.log(err);
+                    ret.articalHTML = '<h3>Sorry there are some error in the server...</h3>';
+                }else{
+                    ret.articalHTML = converter.makeHtml(data);
+                    ret.articalMD = data;
+                }
+                //send back to client
+                response.writeHead(200, {'Content-Type' : 'text/json'});
+                response.write(JSON.stringify(ret));
+                response.end();
+            });
+        }//end else
     });
+
+
 }
 
 function newArtical(request, response){
@@ -111,40 +114,38 @@ function newArtical(request, response){
             console.log('not signin, redirect to /signin');
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
-        }
+        }else{
+            var clientData = '';
+            request.setEncoding("utf8");
+
+            request.on("data", function(data){
+                clientData += data;
+            });
+
+            request.on("end", function(){
+                var backData = {status: -1, error: ''};
+                console.log(clientData);
+                var articalOjb = JSON.parse(clientData);
+                var filename = ARTICAL_PATH + '/' + articalOjb.title + '.md';
+                var artical = articalOjb.artical;
+
+                fs.writeFile(filename, artical, {encoding: 'utf8'}, function(err){
+                    if ( err ){
+                        backData.status = 1;
+                        backData.error = err;
+                    }else{
+                        backData.status = 0;
+                        backData.error = '';
+                    }
+
+                    //write back
+                    response.writeHead(200, {'Content-Type' : 'text/json'});
+                    response.write(JSON.stringify(backData));
+                    response.end();
+                });
+            });//end reqeust.on
+        }//end else
     });
-    
-
-    var clientData = '';
-    request.setEncoding("utf8");
-
-    request.on("data", function(data){
-        clientData += data;
-    });
-
-    request.on("end", function(){
-        var backData = {status: -1, error: ''};
-        console.log(clientData);
-        var articalOjb = JSON.parse(clientData);
-        var filename = ARTICAL_PATH + '/' + articalOjb.title + '.md';
-        var artical = articalOjb.artical;
-
-        fs.writeFile(filename, artical, {encoding: 'utf8'}, function(err){
-            if ( err ){
-                backData.status = 1;
-                backData.error = err;
-            }else{
-                backData.status = 0;
-                backData.error = '';
-            }
-
-            //write back
-            response.writeHead(200, {'Content-Type' : 'text/json'});
-            response.write(JSON.stringify(backData));
-            response.end();
-        });
-    });
-
 }
 
 function getAbsolutePathByTitleSync(title){
