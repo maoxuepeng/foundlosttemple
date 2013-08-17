@@ -45,7 +45,7 @@ app.use(express.static(__dirname + '/static'));
 app.use(protectPath(/^\/protected\/.*$/));
 app.use(express.static(__dirname + '/data/public'));
 
-
+var utils = require('./utils');
 //image upload
 //set up file upload https://github.com/aguidrevitch/jquery-file-upload-middleware
 var upload = require('jquery-file-upload-middleware');
@@ -58,28 +58,37 @@ upload.configure({
         }
     });
 
+//the upload url pattern should be: /upload/?album=xxx
 app.use('/upload', function (request, response, next){
-    upload.fileHandler(
-        {
-            uploadDir: function(){
-                return process.cwd() + '/server/data/public/protected/20434';
-            },
-            uploadUrl: function(){
-                return '/protected/20434';
+    var teamName = request.session.currentTeam;
+    var albumName = utils.getRequestParam(request)['album'];
+    console.log('teamName = ' + teamName + ', albumName = ' + albumName);
+    if ( ! teamName || ! albumName ){
+        next();
+    }else{
+        upload.fileHandler(
+            {
+                uploadDir: function(){
+                    return process.cwd() + '/server/data/public/protected/' + teamName + '/' + albumName;
+                },
+                uploadUrl: function(){
+                    return '/protected/' + teamName + '/' + albumName;
+                }
             }
-        }
         )(request, response, next);
+    }
 });
 
 
 //use body parser. express.bodyParser should be after than the upload, because of the conflition
+//use body parser, then no need use request.on("data",...) to receive client json post data, just request.body is the json object
 app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
 
-
-var utils = require('./utils');
 //auth management
+var utils = require('./utils');
 var authMgmt = require('./usermgmt/auth_question');
 var articalMgmt = require('./articalmgmt/articalmgmt');
+var albumMgmt = require('./albummgmt/albummgmt');
 
 //home page
 app.get('/', function(request, response){
@@ -111,11 +120,18 @@ app.get('/artical/new', function(request, response){
 
 app.post('/artical/new/json', articalMgmt.newArtical);
 
-app.get('/photo', function(request, response){
+app.get('/albums', function(request, response){
+    authMgmt.checkSingin(request, response, function(){
+        utils.writeHTML2Client(__dirname + '/static/20434/album.html', response);
+    });
+});
+app.get('/albums/edit', function(request, response){
     authMgmt.checkSingin(request, response, function(){
         utils.writeHTML2Client(__dirname + '/static/20434/upload.html', response);
     });
 });
+app.get('/albums/meta', albumMgmt.getAlbumMeta);
+app.post('/albums/new', albumMgmt.createAlbum);
 
 
 app.listen(80);

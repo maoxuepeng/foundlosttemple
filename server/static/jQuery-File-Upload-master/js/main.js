@@ -15,11 +15,14 @@
 $(function () {
     'use strict';
 
+    //get the request param from the url:
+    var albumName = decodeURI(
+        (RegExp('album' + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
     // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: '/upload'
+        url: '/upload/?album=' + albumName
     });
 
     // Enable iframe cross-domain access via redirect option:

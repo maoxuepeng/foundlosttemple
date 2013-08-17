@@ -22,6 +22,9 @@
       .background-color{
         border-color: rgb(237,237,237);
       }
+      .center-text{
+        text-align: center
+      }
 
     </style>
     
@@ -57,7 +60,7 @@
     </div>
   </div>
 
-    <div class="container-fluid" id="contentContainer" ng-controller="ArticalCtrl" ng-init="getAllArticalList()">
+    <div class="container-fluid" id="contentContainer" >
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <!--div class="hero-unit">
@@ -68,23 +71,38 @@
 
       <!-- Example row of columns -->
 
-      <div class="span12" ng-repeat="meta in metaList">
+      <div class="span12" ng-controller="AlbumsCtrl" ng-init="loadAlbums()">
         <div>
-          
-          <article>
-            <p class="lead">{{meta.title}}</p>
-            <small>
-              <ul class="inline">
-                <li>{{meta.creationDateTime}}</li>
-                <li><a href="/artical/?title={{meta.title}}"><i class="icon-eye-open"></i>查看详细</a></li>
-                <li><a href="/artical/new/?title={{meta.title}}"><i class="icon-edit"></i>编辑</a></li>
-              </ul>
-            </small>
-          </article>
-        
-        </div>
+          <a data-toggle="modal" class="btn btn-success" href="#addNewAlbum"><i class="icon-plus icon-white"></i>增加相册...</a>
+          <div class="modal fade" id="addNewAlbum">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">增加相册</h4>
+                </div>
+              <div class="modal-body">
+                <input type="text" class="input-block-level" placeholder="输入相册名称" ng-model="newAlbumName">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                <button type="button" class="btn btn-primary" ng-click="newAlbum()">保存</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        </div><!--end div-->
         <hr>
-      </div>
+
+        <div class="row-fluid">
+          <div ng-repeat="album in albumList" class="span3">
+
+            <image class="img-circle" src="{{album.coverImage}}">
+            <p class="lead center-text"><a href="/albums/edit/?album={{album.name}}">{{album.name}}</a></p>
+          </div>
+        </div>
+
+      </div><!--end of span12-->
 
     </div> <!-- /container -->
 
@@ -110,7 +128,7 @@
     <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
     <script src="/bootstrap/js/holder/holder.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
-    <script src="/20434/artical_ctrl.js"></script>
+    <script src="/20434/album_ctrl.js"></script>
     <script>
     </script>
   </body>

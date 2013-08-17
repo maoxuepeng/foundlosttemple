@@ -115,19 +115,12 @@ function newArtical(request, response){
             response.writeHead(302, {'Location' : '/signin'});
             response.end();
         }else{
-            var clientData = '';
-            request.setEncoding("utf8");
-
-            request.on("data", function(data){
-                clientData += data;
-            });
-
-            request.on("end", function(){
-                var backData = {status: -1, error: ''};
-                console.log(clientData);
-                var articalOjb = JSON.parse(clientData);
+                request.setEncoding("utf8");
+                var articalOjb = request.body;
+                console.log(articalOjb);
                 var filename = ARTICAL_PATH + '/' + articalOjb.title + '.md';
                 var artical = articalOjb.artical;
+                var backData = {status: 0, error: ''};
 
                 fs.writeFile(filename, artical, {encoding: 'utf8'}, function(err){
                     if ( err ){
@@ -143,7 +136,6 @@ function newArtical(request, response){
                     response.write(JSON.stringify(backData));
                     response.end();
                 });
-            });//end reqeust.on
         }//end else
     });
 }

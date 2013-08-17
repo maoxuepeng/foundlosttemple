@@ -41,7 +41,6 @@ function isNameIncluded(name, callback){
         if ( err ){
             callback(err, false);
         }else{
-            console.log(data);
             isNameIncluded = (data.indexOf(name) != -1);
             callback(null, isNameIncluded);
         }
@@ -87,7 +86,7 @@ function signin(request, response){
                     authResult.statusCode = 0;
                     authResult.err = null;
                     request.session.username = authInfo.name;
-                    request.session.team = {currentTeam: '20434', currentAlbums: ''};
+                    request.session.currentTeam = '20434';
 
                     //set cookie for auto signin
                     response.cookie('authInfo_teacherName', toBase64(authInfo.teacherName), {maxAge: cookieMaxAge});

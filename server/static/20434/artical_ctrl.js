@@ -4,7 +4,7 @@ function ArticalCtrl($scope, $http){
         $http({
             url: '/artical/meta',
             method: 'GET',
-            headers: {'Content-Type': 'application/x-www-form-encoded'}
+            headers: {'Content-Type': 'application/x-www-form-encoded;charset=UTF-8'}
         }).success( function ( data, status ){
             $scope.metaList = data.metaList;
         } ).error( function ( data, status ){

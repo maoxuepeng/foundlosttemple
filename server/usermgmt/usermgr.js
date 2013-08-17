@@ -34,7 +34,6 @@ function findUserByName(name, callback){
         if ( err ){
             callback(err, null);
         }else{
-            console.log("users = " + data)
             var users = JSON.parse(data);
             var targetUser = users[name];
             if ( targetUser ){

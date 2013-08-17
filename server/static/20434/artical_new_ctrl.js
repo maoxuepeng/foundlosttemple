@@ -26,7 +26,8 @@ function ArticalNewCtrl($scope, $http){
             url: '/artical/new/json',
             method: 'POST',
             data: sendData,
-            headers: {'Content-Type': 'application/x-www-form-encoded; charset=UTF-8'}
+            //headers: {'Content-Type': 'application/x-www-form-encoded; charset=UTF-8'}
+            headers: {'Content-Type': 'application/json; charset=UTF-8'}
         }).success( function( data, status ){
             if ( data.status === 0 ){
                 //succeed redirect to home page
