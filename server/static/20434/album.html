@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="ng-app" ng-app>
+<html lang="en" id="ng-app" ng-app="albumApp">
   <head>
     <meta charset="utf-8">
     <title>永远的20434班</title>
@@ -10,6 +10,7 @@
     <!-- Le styles -->
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/colorbox-master/example1/colorbox.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -24,6 +25,9 @@
       }
       .center-text{
         text-align: center
+      }
+      .hidden-element{
+        display: none;
       }
 
     </style>
@@ -71,7 +75,7 @@
 
       <!-- Example row of columns -->
 
-      <div class="span12" ng-controller="AlbumsCtrl" ng-init="loadAlbums()">
+      <div class="span12" ng-controller="AlbumsCtrl" ng-init="loadAlbums()" >
         <div>
           <a data-toggle="modal" class="btn btn-success" href="#addNewAlbum"><i class="icon-plus icon-white"></i>增加相册...</a>
           <div class="modal fade" id="addNewAlbum">
@@ -95,9 +99,12 @@
         <hr>
 
         <div class="row-fluid">
-          <div ng-repeat="album in albumList" class="span3">
+          <div ng-repeat="album in albumList" main-directive class="span3">
 
-            <image class="img-circle" src="{{album.coverImage}}">
+            <a colorbox-data="colorbox-{{album.name}}" href="{{album.coverImage}}"><image class="img-circle" src="{{album.coverImage}}"></a>
+            <div class="hidden-element" id="album-{{album.name}}">
+              <a colorbox-data="colorbox-{{album.name}}" ng-repeat="file in album.files" colorbox-directive href="{{file.url}}"></a>
+            </div>
             <p class="lead center-text"><a href="/albums/edit/?album={{album.name}}">{{album.name}}</a></p>
           </div>
         </div>
@@ -109,7 +116,7 @@
     <div id="footer">
       <p class="muted credit">&copy; Utopia-Project All Rights Reserved.</p>
     </div>
-
+  </body>
      <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -127,9 +134,10 @@
     <script src="/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="/bootstrap/js/bootstrap-typeahead.js"></script>
     <script src="/bootstrap/js/holder/holder.js"></script>
+    <script src="/colorbox-master/jquery.colorbox.js"></script>
     <script src="/angularjs_1.0.7/angular.js"></script>
     <script src="/20434/album_ctrl.js"></script>
     <script>
     </script>
-  </body>
+
 </html>

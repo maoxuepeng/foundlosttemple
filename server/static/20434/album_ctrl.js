@@ -1,3 +1,22 @@
+angular.module('albumApp', [])
+.directive('colorboxDirective', function($timeout){
+    return function(scope, element, attrs){
+    };
+})
+.directive('mainDirective', function($timeout){
+    return function(scope, element, attrs){
+        if ( scope.$last ){
+            $timeout( function(){
+                var group = 'colorbox-' + scope.album.name;
+                $('a[colorbox-data="' + group + '"]').colorbox({
+                    rel: group,
+                    height: '100%'
+                });
+            } );
+        }
+    };
+} );
+
 function AlbumsCtrl($scope, $http){
     $scope.albumList = [];
 

@@ -62,6 +62,11 @@ upload.configure({
 app.use('/upload', function (request, response, next){
     var teamName = request.session.currentTeam;
     var albumName = utils.getRequestParam(request)['album'];
+    var slashIndex = albumName.indexOf('/');
+    //i dont know why jquery file upload component will append photo name in the url, like this: /upload/?album=xxx/me.jpg
+    if ( slashIndex != -1 ){
+        albumName = albumName.substring(0, slashIndex);
+    }
     console.log('teamName = ' + teamName + ', albumName = ' + albumName);
     if ( ! teamName || ! albumName ){
         next();
