@@ -52,7 +52,7 @@ function AlbumsCtrl($scope, $http){
 
     $scope.loadPhotoOfAlbum = function(albumName){
         $http({
-            url: '/upload/?album=' + albumName,
+            url: '/upload/?album=' + encodeURIComponent(albumName),
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-encoded;charset=UTF-8'}
         }).success( function ( data, status ){
