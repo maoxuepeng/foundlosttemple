@@ -65,6 +65,8 @@ function AlbumsCtrl($scope, $http){
                 oneAlbum.coverImage = '/protected/weifusion.png';
             }else{
                 oneAlbum.coverImage = data.files[0].url;
+                //cover image is the first image, so delete the first one
+                oneAlbum.files = data.files.slice(1);
             }
             $scope.albumList.push(oneAlbum);
             
