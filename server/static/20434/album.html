@@ -78,6 +78,7 @@
       <div class="span12" ng-controller="AlbumsCtrl" ng-init="loadAlbums()" >
         <div>
           <a data-toggle="modal" class="btn btn-success" href="#addNewAlbum"><i class="icon-plus icon-white"></i>增加相册...</a>
+          <hr>
           <div class="modal fade" id="addNewAlbum">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -96,7 +97,6 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         </div><!--end div-->
-        <hr>
 
         <div class="row-fluid">
           <div ng-repeat="album in albumList" main-directive class="span3">

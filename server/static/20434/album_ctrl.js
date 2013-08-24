@@ -74,7 +74,7 @@ function AlbumsCtrl($scope, $http){
     };
 
     $scope.newAlbum = function(){
-        var sendData = {newAlbumName: $scope.newAlbumName};
+        var sendData = {newAlbumName: encodeURIComponent($scope.newAlbumName)};
          $http({
             url: '/albums/new', 
             data: sendData,
